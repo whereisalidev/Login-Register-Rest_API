@@ -26,7 +26,9 @@ class RegisterSerializer(serializers.Serializer):
 
 
 
-
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
 
 
 
