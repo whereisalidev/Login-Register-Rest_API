@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.authentication import authenticate
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
+
 
 
 class RegisterAPI(APIView):
@@ -23,8 +25,10 @@ class LoginAPI(APIView):
         data = request.data
         serializer = LoginSerializer(data=data)
         if serializer.is_valid():
-            user = authenticate(username=serializer.data['username'], password=serializer.data['password'])
-            if user is not None:
+            user = User.objects.get(email=data['email'])
+            if user.check_password(data['password']):
+            # user = authenticate(username=serializer.data['username'], password=serializer.data['password'])
+            # if user is not None:
                 token, _ = Token.objects.get_or_create(user= user)
                 return Response({'message': 'User Logged in Successfully', 'token': str(token)}, status=status.HTTP_200_OK)
             return Response({'message': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
