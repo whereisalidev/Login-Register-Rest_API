@@ -33,7 +33,7 @@ Introducing User Authentication APIs (login and register) with validation logic 
 
 # Login user:
 {
-    "username": "string",
+    "email": "string",
     "password": "integer"
 }
 
